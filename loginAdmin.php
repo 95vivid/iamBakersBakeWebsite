@@ -29,13 +29,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['email'] = $user['email'];
         
         // Redirect to admin dashboard
-        header("Location: admin-dashboard.php");
+        header("Location: dashboardAdmin.html");
         exit();
     } else {
         // Login failed
         echo "<script>
             alert('Invalid email or password. Please try again.');
-            window.location.href = 'login.html';
+            window.location.href = '.html';
         </script>";
     }
 }
