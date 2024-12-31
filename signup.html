@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Baker Admin</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+        }
+
+        .logo img {
+            width: 120px;
+            height: auto;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #333;
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .password-hint {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        button {
+            padding: 10px 30px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn-cancel {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            color: #333;
+        }
+
+        .btn-next {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .login-link a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 40px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <img src="bakers.png" alt="Baker Admin Logo">
+        </div>
+        <nav class="nav-menu">
+            <a href="#">Main</a>
+            <a href="#">Products</a>
+            <a href="#">FAQ</a>
+            <a href="#">Profile</a>
+            <a href="#">Sign Up/ Login</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1>Sign Up</h1>
+        <form action="register.php" method="POST" id="signupForm">
+            <div class="form-group">
+                <label for="fullname">Full Name</label>
+                <input type="text" id="fullname" name="fullname" required>
+            </div>
+
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+                <p class="password-hint">Your password must be 5-20 characters long. Only alphanumeric characters, dashes, periods and underscores are allowed.</p>
+            </div>
+
+            <div class="form-group">
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+            </div>
+
+            <div class="button-group">
+                <button type="button" class="btn-cancel">Cancel</button>
+                <button type="submit" class="btn-next">Register</button>
+            </div>
+        </form>
+
+        <div class="login-link">
+            <p>Already have account? <a href="login.html">Login here</a></p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="bakers.png" alt="Baker Admin Logo" width="100">
+            </div>
+            <div class="footer-links">
+                <h3>Information</h3>
+                <p>Main</p>
+                <p>Products</p>
+                <p>Contacts</p>
+                <p>FAQ</p>
+            </div>
+            <div class="footer-contact">
+                <h3>Contacts</h3>
+                <p>Kuching, Sarawak, Malaysia</p>
+                <p>+60 12 345 6789</p>
+                <p>bakeradmin123@gmail.com</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm_password').value;
+            
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+            
+            this.submit();
+        });
+    </script>
+</body>
+</html>
