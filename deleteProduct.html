@@ -140,43 +140,7 @@
             background-color: #c82333;
         }
 
-        /* Footer Styles */
-        .footer {
-            background-color: #333;
-            color: white;
-            padding: 40px;
-            margin-top: auto;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 40px;
-        }
-
-        .footer-section h3 {
-            margin-bottom: 20px;
-        }
-
-        .footer-section p {
-            margin-bottom: 10px;
-        }
-
-        @media (max-width: 768px) {
-            body {
-                flex-direction: column;
-            }
-
-            .sidebar {
-                width: 100%;
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr;
-            }
-        }
+        
     </style>
 </head>
 <body>
@@ -184,11 +148,13 @@
         <div class="logo">
             <img src="bakers.png" onclick="window.location.href='dashboardAdmin.html'">
         </div>
+        <button class="nav-button" onclick="window.location.href='dashboardAdmin.html'">Home</button>
         <button class="nav-button" onclick="window.location.href='addNewProduct.html'">Add</button>
-        <button class="nav-button">Edit</button>
+        <button class="nav-button" onclick="window.location.href='editProduct.html'">Edit</button>
         <button class="nav-button" onclick="window.location.href='catalog.html'">Catalog</button>
         <button class="nav-button" onclick="window.location.href='viewProducts.html'">View</button>
         <button class="nav-button" onclick="window.location.href='deleteProduct.html'">Delete</button>
+        
     </div>
     </div>
 
@@ -223,29 +189,7 @@
             </table>
         </div>
 
-        <div class="footer">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Information</h3>
-                    <p>Main</p>
-                    <p>Products</p>
-                    <p>Contacts</p>
-                    <p>FAQ</p>
-                </div>
-                <div class="footer-section">
-                    <h3>Contacts</h3>
-                    <p>1234 Sample Street</p>
-                    <p>Austin Texas 78704</p>
-                    <p>+60 18-980 3060</p>
-                </div>
-                <div class="footer-section">
-                    <h3>Social Media</h3>
-                    <p>Facebook</p>
-                    <p>Instagram</p>
-                    <p>irsyashirah0104@gmail.com</p>
-                </div>
-            </div>
-        </div>
+        
     </div>
 
     <script>
