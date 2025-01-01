@@ -20,26 +20,30 @@
             text-align: left;
         }
 
+        th{
+            background-color: #f5f0e8;
+        }
+
         .action-btn {
             padding: 5px 10px;
             cursor: pointer;
             margin: 0 5px;
-            background-color: #4CAF50;
-            color: white;
+            background-color: #f5f0e8;
+            color: #333;
             border: none;
             border-radius: 3px;
         }
 
         .action-btn:hover {
-            background-color: #45a049;
+            background-color: #ddd0c0;
         }
 
         .delete-btn {
-            background-color: #f44336;
+            background-color: #f5f0e8;
         }
 
         .delete-btn:hover {
-            background-color: #da190b;
+            background-color: #ddd0c0;
         }
 
         #editForm {
@@ -66,12 +70,12 @@
             margin-right: 10px;
             border: none;
             border-radius: 4px;
-            background-color: #4CAF50;
+            background-color: #8B6E5D;
             color: white;
         }
 
         #editForm button[type="button"]:last-child {
-            background-color: #f44336;
+            background-color: #8B6E5D;
         }
 
         .header-section {
@@ -80,19 +84,34 @@
             align-items: center;
             margin: 0 0 20px 0;
             padding: 20px;
-            background-color: #f5f5f5;
+            /* background-color: #f5f0e8; */
             border-radius: 5px;
             box-sizing: border-box;
         }
 
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+        }
+
         .header-title {
+            padding-left: 20px;
             margin: 0;
+            font-size: 38px;
+            color: #333;
         }
 
         .header-buttons {
             display: flex;
             gap: 10px;
-            justify-content: flex-end; /* Align buttons to the right */
+            justify-content: flex-end;
         }
 
         .add-btn, .exit-btn {
@@ -102,23 +121,28 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
-            min-width: 120px;
         }
 
         .add-btn {
-            background-color: #4CAF50;
+            background-color: #f5f0e8;
+            font-size: 16px;
+            color: #333;
+            min-width: 50px;
         }
 
         .add-btn:hover {
-            background-color: #45a049;
+            background-color: #ddd0c0;
         }
 
         .exit-btn {
-            background-color: #666;
+            background-color: #f5f0e8;
+            font-size: 16px;
+            color: #333;
+            min-width: 50px;
         }
 
         .exit-btn:hover {
-            background-color: #555;
+            background-color: #ddd0c0;
         }
 
         .container {
@@ -139,13 +163,17 @@
     </style>
 </head>
 <body>
-    <div class="header-section">
-        <h1 class="header-title">Order Management</h1>
-        <div class="header-buttons">
-            <button class="exit-btn" onclick="exitToAdmin()">Exit</button>
-            <button class="add-btn" onclick="showAddForm()">Add Order</button>
+    <div class="container">
+        <div class="header-section">
+            <div class="header-left">
+                <img src="logo.png" alt="Company Logo" class="logo">
+                <h1 class="header-title">Order Management</h1>
+            </div>
+            <div class="header-buttons">       
+                <button class="add-btn" onclick="showAddForm()">Add Order</button>
+                <button class="exit-btn" onclick="exitToAdmin()">Exit</button>
+            </div>
         </div>
-    </div>
 
     <table>
         <thead>
