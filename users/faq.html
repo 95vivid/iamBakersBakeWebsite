@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - BakersBakes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+         :root {
+            --color-primary: #333333;
+            --color-secondary: #666666;
+            --color-background: #f5f5f5;
+            --color-white: #ffffff;
+            --font-primary: 'Playfair Display', serif;
+            --font-secondary: 'Inter', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-secondary);
+            background-color: var(--color-background);
+            color: var(--color-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .header {
+            padding: 1rem 2rem;
+            background-color: var(--color-white);
+            border-bottom: 1px solid #eee;
+        }
+
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--color-secondary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .nav-links a.active {
+            color: var(--color-primary);
+            font-weight: 500;
+        }
+
+        .cart-icon {
+            width: 24px;
+            height: 24px;
+        }
+
+        .faq-section {
+            padding: 2rem 0;
+        }
+
+        .faq-title {
+            font-family: 'Playfair Display', serif;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+        }
+
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .faq-item {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .faq-question {
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 0.5rem;
+        }
+
+        .faq-answer {
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .footer {
+            background-color: #333;
+            color: var(--color-white);
+            padding: 4rem 0 2rem;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .footer-logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 0.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-link img {
+            width: 24px;
+            height: 24px;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .social-link:hover img {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <a href="/">
+                <img src="img/logo.jpg" alt="BakersBakes Logo" class="logo">
+            </a>
+            <div class="nav-links">
+                <a href="dashboard.html">MAIN</a>
+                <a href="catalog.html">PRODUCTS</a>
+                <a href="faq.html" class="active">FAQ</a>
+                <a href="profile.html">PROFILE</a>
+                <a href="signup.php">SIGN UP / LOGIN</a>
+                <a href="cart.php">
+                    <img src="https://raw.githubusercontent.com/twbs/icons/main/icons/bag-heart.svg" alt="Cart" class="cart-icon">
+                </a>
+            </div>
+        </nav>
+    </header>
+
+     <!-- FAQ Section -->
+     <main class="faq-section">
+        <div class="container">
+            <h1 class="faq-title">FAQ</h1>
+            
+            <div class="faq-list">
+                <!-- FAQ Item 1 -->
+                <div class="faq-item">
+                    <div class="faq-question">Can I customize a cake or pastry for a special occasion?</div>
+                    <div class="faq-answer">Yes you can. Just contact the number given for custom order.</div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="faq-item">
+                    <div class="faq-question">How long do your baked goods last?</div>
+                    <div class="faq-answer">They will last up to 3 days when refrigerated.</div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="faq-item">
+                    <div class="faq-question">Do you offer delivery service?</div>
+                    <div class="faq-answer">Yes, we offer both self-pickup and delivery services.</div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="faq-item">
+                    <div class="faq-question">How far in advance should I place an order?</div>
+                    <div class="faq-answer">For special occasions and custom orders, it's best to place your order at least a week in advance. For regular orders, 1-2 days in advance should be sufficient, depending on product availability.</div>
+                </div>
+
+                <!-- FAQ Item 5 -->
+                <div class="faq-item">
+                    <div class="faq-question">Do you offer gift wrapping?</div>
+                    <div class="faq-answer">Yes you can. Just contact the number given for custom order.</div>
+                </div>
+
+                <!-- FAQ Item 6 -->
+                <div class="faq-item">
+                    <div class="faq-question">What payment methods do you accept?</div>
+                    <div class="faq-answer">We accept credit/debit cards, online banking, and e-wallets.</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <img src="img/logo.jpg" alt="BakersBakes Logo" class="footer-logo">
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>📍 Kuching, Sarawak, Malaysia</p>
+                <p>📞 +60 18 980 3060</p>
+                <p>📧 <a href="mailto:irasyahirah@gmail.com">irasyahirah@gmail.com</a></p>
+            </div>
+
+            <div class="footer-section">
+                <h3>Social Media</h3>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/login" class="social-link">
+                        <img src="https://raw.githubusercontent.com/twbs/icons/main/icons/facebook.svg" alt="Facebook">
+                    </a>
+                    <a href="https://www.instagram.com/iam.bakersbakes?igsh=em4wb2RrcHNiYnpi" class="social-link">
+                        <img src="https://raw.githubusercontent.com/twbs/icons/main/icons/instagram.svg" alt="Instagram">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
