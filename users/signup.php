@@ -190,6 +190,12 @@ session_start();
             gap: 2rem;
         }
 
+        .footer-logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+        }
+
         .footer-section h3 {
             margin-bottom: 1rem;
         }
@@ -282,7 +288,7 @@ session_start();
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-section">
-                <img src="logo.jpg" alt="BakersBakes Logo" class="footer-logo">
+                <img src="img/logo.jpg" alt="BakersBakes Logo" class="footer-logo">
             </div>
             
             <div class="footer-section">
