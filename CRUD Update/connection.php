@@ -1,3 +1,3 @@
 <?php
-    $conn = mysqli_connect("localhost","root","", "adminbaker") or die('connection failed');
+    $conn = mysqli_connect("localhost","root","", "register_db") or die('connection failed');
 ?>
