@@ -139,7 +139,7 @@
 <body>
     <header>
         <div class="flex">
-            <img src="bakers.png" alt="Baker's Logo" class="header-logo">
+            <img src="logo.png" alt="Baker's Logo" class="header-logo">
             <?php include 'header.php'; ?>
         </div>
     </header>
