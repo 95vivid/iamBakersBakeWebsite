@@ -3,7 +3,7 @@ session_start();
 
 // Database connection
 $host = 'localhost';
-$dbname = 'adminbaker';
+$dbname = 'register_db';
 $username = 'root';
 $password = '';
 
