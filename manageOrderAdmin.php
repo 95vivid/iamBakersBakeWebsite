@@ -1,160 +1,98 @@
 <?php
-// Disable error display in output
-ini_set('display_errors', 0);
-error_reporting(E_ALL);
-// Log errors instead
-ini_set('log_errors', 1);
-ini_set('error_log', 'php_errors.log');
+include("db.php"); // Include your database connection file
 
-// CORS headers
-header("Access-Control-Allow-Origin: http://localhost");
-header("Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
-header("Access-Control-Allow-Credentials: true");
-header('Content-Type: application/json');
+// Fetch all orders (GET request)
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && !isset($_GET['order_id'])) {
+    $sql = "SELECT * FROM orders";
+    $result = $conn->query($sql);
 
-// Handle preflight requests
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(200);
-    exit();
-}
-
-// Database configuration
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "register_db";
-
-// Create database connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    error_log("Connection failed: " . $conn->connect_error);
-    http_response_code(500);
-    echo json_encode(["success" => false, "error" => "Database connection failed"]);
-    exit();
-}
-
-try {
-    // Handle GET request (fetch orders)
-    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-        $sql = "SELECT order_id, customer_id, productName, productQuantity, order_date, total_amount FROM orders";
-        $result = $conn->query($sql);
-
-        if (!$result) {
-            throw new Exception("Database query failed: " . $conn->error);
-        }
-
-        $orders = [];
-        while ($row = $result->fetch_assoc()) {
-            // Map customer_id to user_id for frontend compatibility
-            $row['user_id'] = $row['customer_id'];
-            unset($row['customer_id']);
-            $orders[] = $row;
-        }
-
-        echo json_encode($orders);
-        exit();
+    $orders = [];
+    while ($row = $result->fetch_assoc()) {
+        $orders[] = $row;
     }
 
-    // Handle POST request (add/update order)
-    elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $input = file_get_contents('php://input');
-        $data = json_decode($input, true);
+    echo json_encode($orders);
+    exit;
+}
 
-        if ($data === null) {
-            throw new Exception("Invalid JSON data: " . json_last_error_msg());
-        }
+// Fetch a single order by ID (GET request)
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['order_id'])) {
+    $order_id = $_GET['order_id'];
+    $sql = "SELECT * FROM orders WHERE order_id = '$order_id'";
+    $result = $conn->query($sql);
 
-        $order_id = $data['order_id'] ?? '';
-        $customer_id = $data['customer_id'] ?? '';
-        $productName = $data['productName'] ?? '';
-        $productQuantity = $data['productQuantity'] ?? '';
-        $order_date = $data['order_date'] ?? '';
-        $total_amount = $data['total_amount'] ?? '';
+    if ($result->num_rows > 0) {
+        echo json_encode($result->fetch_assoc());
+    } else {
+        echo json_encode([]);
+    }
+    exit;
+}
 
-        // Validate required fields
-        if (empty($customer_id) || empty($productName) || empty($productQuantity) || empty($order_date) || empty($total_amount)) {
-            throw new Exception("All fields are required");
-        }
+// Handle POST request for adding or editing orders
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $data = json_decode(file_get_contents('php://input'), true);
 
-        // Sanitize inputs
-        $customer_id = $conn->real_escape_string($customer_id);
-        $productName = $conn->real_escape_string($productName);
-        $productQuantity = $conn->real_escape_string($productQuantity);
-        $order_date = $conn->real_escape_string($order_date);
-        $total_amount = $conn->real_escape_string($total_amount);
+    $order_id = $data['order_id'] ?? null;  // if null, new order, else existing order
+    $customer_id = $data['customer_id'];
+    $cust_name = $data['cust_name'];
+    $cust_num = $data['cust_num'];
+    $cust_email = $data['cust_email'];
+    $address = $data['address'];
+    $productName = $data['productName'];
+    $productQuantity = $data['productQuantity'];
+    $order_date = $data['order_date'];
+    $payment_method = $data['payment_method'];
+    $delivery_opt = $data['delivery_opt'];
+    $total_amount = $data['total_amount'];
 
-        if (!empty($order_id)) {
-            // Update existing order
-            $order_id = $conn->real_escape_string($order_id);
-            $sql = "UPDATE orders SET 
+    if ($order_id) {
+        // Update order
+        $sql = "UPDATE orders SET 
                     customer_id = '$customer_id',
+                    cust_name = '$cust_name',
+                    cust_num = '$cust_num',
+                    cust_email = '$cust_email',
+                    address = '$address',
                     productName = '$productName',
                     productQuantity = '$productQuantity',
                     order_date = '$order_date',
+                    payment_method = '$payment_method',
+                    delivery_opt = '$delivery_opt',
                     total_amount = '$total_amount'
-                    WHERE order_id = '$order_id'";
+                WHERE order_id = '$order_id'";
+
+        if ($conn->query($sql) === TRUE) {
+            echo json_encode(["success" => true]);
         } else {
-            // Insert new order
-            $sql = "INSERT INTO orders 
-                    (customer_id, productName, productQuantity, order_date, total_amount) 
-                    VALUES 
-                    ('$customer_id', '$productName', '$productQuantity', '$order_date', '$total_amount')";
+            echo json_encode(["success" => false, "error" => $conn->error]);
         }
+    } else {
+        // Insert new order
+        $sql = "INSERT INTO orders (customer_id, cust_name, cust_num, cust_email, address, productName, productQuantity, order_date, payment_method, delivery_opt, total_amount)
+                VALUES ('$customer_id', '$cust_name', '$cust_num', '$cust_email', '$address', '$productName', '$productQuantity', '$order_date', '$payment_method', '$delivery_opt', '$total_amount')";
 
-        if (!$conn->query($sql)) {
-            throw new Exception("Database error: " . $conn->error);
+        if ($conn->query($sql) === TRUE) {
+            echo json_encode(["success" => true]);
+        } else {
+            echo json_encode(["success" => false, "error" => $conn->error]);
         }
-
-        echo json_encode(["success" => true]);
-        exit();
-    }
-
-    // Handle DELETE request
-    elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
-        $input = file_get_contents('php://input');
-        $data = json_decode($input, true);
-
-        if ($data === null) {
-            throw new Exception("Invalid JSON data: " . json_last_error_msg());
-        }
-
-        $order_id = $data['order_id'] ?? '';
-        if (empty($order_id)) {
-            throw new Exception("Order ID is required");
-        }
-
-        $order_id = $conn->real_escape_string($order_id);
-        $sql = "DELETE FROM orders WHERE order_id='$order_id'";
-
-        if (!$conn->query($sql)) {
-            throw new Exception("Database error: " . $conn->error);
-        }
-
-        echo json_encode(["success" => true]);
-        exit();
-    }
-
-    // Handle unsupported methods
-    else {
-        http_response_code(405);
-        echo json_encode(["success" => false, "error" => "Method not allowed"]);
-        exit();
-    }
-
-} catch (Exception $e) {
-    error_log("Error: " . $e->getMessage());
-    http_response_code(500);
-    echo json_encode([
-        "success" => false,
-        "error" => $e->getMessage()
-    ]);
-    exit();
-} finally {
-    if (isset($conn)) {
-        $conn->close();
     }
 }
+
+// Handle DELETE request
+if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+    $data = json_decode(file_get_contents('php://input'), true);
+    $order_id = $data['order_id'];
+
+    $sql = "DELETE FROM orders WHERE order_id = '$order_id'";
+
+    if ($conn->query($sql) === TRUE) {
+        echo json_encode(["success" => true]);
+    } else {
+        echo json_encode(["success" => false, "error" => $conn->error]);
+    }
+}
+
+$conn->close();
 ?>
