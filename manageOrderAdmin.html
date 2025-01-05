@@ -3,482 +3,347 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Orders</title>
+    <title>Manage Orders - Admin</title>
     <style>
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        /* Header Styling */
+        header {
+            background: #fff;
+            padding: 10px 0;
+            position: relative;
+            display: flex;
+            justify-content: flex-start; /* Align content to the left */
+            align-items: center; /* Center items vertically */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header img {
+            width: 110px;
+            height: 110px;
+            margin-left: 70px; /* Add margin to the left to give space */
+        }
+
+        header h1 {
+            margin: 10px 0;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+            margin-left: 50px; /* Ensure the title doesn't overlap with the logo */
+        }
+
+        /* Button Styling */
+        .btn {
+            padding: 8px 16px;
+            background-color: #dfdbd4;
+            color: #333;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            border-radius: 5px;
+            margin: 5px;
+        }
+
+        .btn:hover {
+            background-color: #ddd0c0;
+        }
+
+        /* Table Styling */
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 20px;
+            margin-top: 20px;
         }
-        table, th, td {
-            border: 1px solid black;
-        }
+
         th, td {
-            padding: 8px;
+            padding: 12px;
             text-align: left;
-        }
-        th{
-            background-color: #f5f0e8;
-        }
-        .action-btn {
-            padding: 5px 10px;
-            cursor: pointer;
-            margin: 0 5px;
-            background-color: #f5f0e8;
-            color: #333;
-            border: none;
-            border-radius: 3px;
+            border: 1px solid #ddd;
         }
 
-        .action-btn:hover {
-            background-color: #ddd0c0;
+        th {
+            background-color: #f2f2f2;
         }
 
-        .delete-btn {
-            background-color: #f5f0e8;
-        }
-
-        .delete-btn:hover {
-            background-color: #ddd0c0;
-        }
-
-        #editForm {
+        /* Form Styling */
+        .addForm {
             display: none;
             margin-top: 20px;
             padding: 20px;
             border: 1px solid #ccc;
+            background-color: white;
             border-radius: 5px;
-            background-color: #f9f9f9;
         }
 
-        #editForm input {
-            margin: 5px 0;
+        .addForm input {
             padding: 8px;
+            margin-bottom: 10px;
             width: 100%;
-            border: 1px solid #ddd;
+            border: 1px solid #ccc;
             border-radius: 4px;
-            box-sizing: border-box;
         }
 
-        #editForm button {
-            padding: 10px 20px;
-            cursor: pointer;
-            margin-right: 10px;
-            border: none;
-            border-radius: 4px;
-            background-color: #8B6E5D;
+        .addForm label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .addForm button {
+            width: 100%;
+            background-color: #4CAF50;
             color: white;
-        }
-
-        #editForm button[type="button"]:last-child {
-            background-color: #8B6E5D;
-        }
-
-        .header-section {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 0 0 20px 0;
-            padding: 20px;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .logo {
-            width: 100px;
-            height: 100px;
-            object-fit: contain;
-        }
-
-        .header-title {
-            padding-left: 20px;
-            margin: 0;
-            font-size: 38px;
-            color: #333;
-        }
-
-        .header-buttons {
-            display: flex;
-            gap: 10px;
-            justify-content: flex-end;
-        }
-
-        .add-btn, .exit-btn {
-            padding: 10px 20px;
-            color: white;
+            padding: 12px;
             border: none;
-            border-radius: 5px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 1rem;
+            margin-top: 10px;
         }
 
-        .add-btn {
-            background-color: #f5f0e8;
-            font-size: 16px;
-            color: #333;
-            min-width: 50px;
+        .addForm button:hover {
+            background-color: #45a049;
         }
-
-        .add-btn:hover {
-            background-color: #ddd0c0;
-        }
-
-        .exit-btn {
-            background-color: #f5f0e8;
-            font-size: 16px;
-            color: #333;
-            min-width: 50px;
-        }
-
-        .exit-btn:hover {
-            background-color: #ddd0c0;
-        }
-
-        .container {
-            max-width: 100%;
-            /*padding: 10px;*/
-            box-sizing: border-box;
-        }
-
-        .error-message {
-            color: #f44336;
-            margin: 10px 0;
-        }
-
-        .success-message {
-            color: #4CAF50;
-            margin: 10px 0;
-        }
-        /* Footer */
-footer {
-    width: 100%;
-    background-color: #333;
-    color: white;
-    padding: 2rem 0;
-    margin-top: 250px;
-    box-sizing: border-box;
-}
-
-.footer-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2rem;
-    padding: 0 2rem; /* Add padding for spacing */
-}
-
-.footer-logo {
-    width: 100px;
-    margin-bottom: 1rem;
-}
-
-.footer-section h3 {
-    margin-bottom: 1rem;
-    font-size: 1.2rem;
-    border-bottom: 2px solid #555;
-    padding-bottom: 0.5rem;
-}
-
-.footer-section ul {
-    list-style: none;
-    padding: 0;
-}
-
-.footer-section li {
-    margin-bottom: 0.5rem;
-}
-
-.footer-section a {
-    color: white;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.footer-section a:hover {
-    color: #ddd;
-}
-
-.social-links {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-}
-
-.social-links img {
-    height: 24px;
-    width: 24px;
-    filter: brightness(0) invert(1);
-    transition: transform 0.3s ease, filter 0.3s ease;
-}
-
-.social-links img:hover {
-    transform: scale(1.1);
-    filter: brightness(0.8) invert(1);
-}
-
-.copyright {
-    text-align: center;
-    margin-top: 1rem;
-    padding-top: 1rem;
-    border-top: 1px solid #555;
-    font-size: 0.9rem;
-    color: #bbb;
-}
 
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header-section">
-            <div class="header-left">
-                <img src="logo.png" alt="Company Logo" class="logo">
-                <h1 class="header-title">Order Management</h1>
-            </div>
-            <div class="header-buttons">       
-                <button class="add-btn" onclick="showAddForm()">Add Order</button>
-                <button class="exit-btn" onclick="exitToAdmin()">Exit</button>
-            </div>
-        </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Order ID</th>
-                <th>Customer ID</th>
-                <th>Product</th>
-                <th>Quantity</th>
-                <th>Order Date</th>
-                <th>Total (RM)</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody id="orderTableBody"></tbody>
-    </table>
-
-    <div id="editForm">
-        <h3 id="formTitle">Edit/Add Order</h3>
-        <form id="orderForm" onsubmit="event.preventDefault(); saveOrder();">
-            <input type="hidden" id="order_id">
-            <input type="number" id="user_id" placeholder="Customer ID" required>
-            <input type="text" id="productName" placeholder="Product" required>
-            <input type="number" id="productQuantity" placeholder="Quantity" required>
-            <input type="date" id="order_date" required>
-            <input type="number" step="0.01" id="total_amount" placeholder="Total" required>     
-            <button type="submit">Save</button>
-            <button type="button" onclick="hideEditForm()">Cancel</button>
-        </form>
+<!-- Header Section -->
+<header>
+    <div class="logo">
+        <img src="img/logo.jpg" alt="Logo">
     </div>
+    <h1>Manage Orders</h1>
+</header>
 
-    <script>
-        const API_URL = 'http://localhost/register_db/manageOrderAdmin.php';
+<!-- Navigation Buttons -->
+<div style="text-align: center; margin-top: 20px;">
+    <button class="btn" onclick="exitToDashboard()">Exit to Dashboard</button>
+    <button class="btn" onclick="showAddForm()">Add New Order</button>
+</div>
 
-        async function handleResponse(response) {
-            const contentType = response.headers.get('content-type');
-            if (!contentType || !contentType.includes('application/json')) {
-                throw new Error('Received non-JSON response from server');
-            }
-            const data = await response.json();
-            if (!response.ok) {
-                throw new Error(data.error || `HTTP error! status: ${response.status}`);
-            }
-            return data;
+<!-- Add/Edit Order Form -->
+<div class="addForm" id="addForm">
+    <h3 id="formTitle">Add New Order</h3>
+    <form id="orderForm">
+        <input type="hidden" id="order_id" name="order_id">
+        <label>Customer ID:</label><br>
+        <input type="text" id="customer_id" name="customer_id"><br><br>
+
+        <label>Customer Name:</label><br>
+        <input type="text" id="cust_name" name="cust_name"><br><br>
+
+        <label>Customer Number:</label><br>
+        <input type="text" id="cust_num" name="cust_num"><br><br>
+
+        <label>Customer Email:</label><br>
+        <input type="email" id="cust_email" name="cust_email"><br><br>
+
+        <label>Address:</label><br>
+        <input type="text" id="address" name="address"><br><br>
+
+        <label>Product Name:</label><br>
+        <input type="text" id="productName" name="productName"><br><br>
+
+        <label>Product Quantity:</label><br>
+        <input type="text" id="productQuantity" name="productQuantity"><br><br>
+
+        <label>Order Date:</label><br>
+        <input type="date" id="order_date" name="order_date"><br><br>
+
+        <label>Payment Method:</label><br>
+        <input type="text" id="payment_method" name="payment_method"><br><br>
+
+        <label>Delivery Option:</label><br>
+        <input type="text" id="delivery_opt" name="delivery_opt"><br><br>
+
+        <label>Total Amount:</label><br>
+        <input type="text" id="total_amount" name="total_amount"><br><br>
+
+        <button type="button" class="btn" onclick="saveOrder()">Save Order</button>
+        <button type="button" class="btn" onclick="hideAddForm()">Cancel</button>
+    </form>
+</div>
+
+<!-- Orders Table -->
+<table id="ordersTable">
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>Customer Name</th>
+            <th>Customer Number</th>
+            <th>Customer Email</th>
+            <th>Address</th>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Order Date</th>
+            <th>Payment Method</th>
+            <th>Delivery Option</th>
+            <th>Total Amount</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Orders will be loaded here -->
+    </tbody>
+</table>
+
+<script>
+    // Function to show the Add Order form for a new order
+    function showAddForm() {
+        document.getElementById('addForm').style.display = 'block';
+        document.getElementById('formTitle').innerText = 'Add New Order';
+        document.getElementById('orderForm').reset(); // Reset the form
+        document.getElementById('order_id').value = ''; // Ensure no order ID is present
+    }
+
+    // Function to hide the Add/Edit Order form
+    function hideAddForm() {
+        document.getElementById('addForm').style.display = 'none';
+    }
+
+    // Fetch orders from the database
+    async function fetchOrders() {
+        try {
+            const response = await fetch('manageOrderAdmin.php', { method: 'GET' });
+            const orders = await response.json();
+            const ordersTableBody = document.querySelector('#ordersTable tbody');
+            ordersTableBody.innerHTML = ''; // Clear existing table rows
+
+            orders.forEach(order => {
+                const row = document.createElement('tr');
+                row.innerHTML = ` 
+                    <td>${order.order_id}</td>
+                    <td>${order.cust_name}</td>
+                    <td>${order.cust_num}</td>
+                    <td>${order.cust_email}</td>
+                    <td>${order.address}</td>
+                    <td>${order.productName}</td>
+                    <td>${order.productQuantity}</td>
+                    <td>${order.order_date}</td>
+                    <td>${order.payment_method}</td>
+                    <td>${order.delivery_opt}</td>
+                    <td>${order.total_amount}</td>
+                    <td>
+                        <button class="btn" onclick="editOrder(${order.order_id})">Edit</button>
+                        <button class="btn" onclick="deleteOrder(${order.order_id})">Delete</button>
+                    </td>
+                `;
+                ordersTableBody.appendChild(row);
+            });
+        } catch (error) {
+            console.error('Error fetching orders:', error);
         }
+    }
 
-        async function fetchOrders() {
+    // Edit an existing order
+    async function editOrder(order_id) {
+        try {
+            const response = await fetch('manageOrderAdmin.php?order_id=' + order_id, { method: 'GET' });
+            const order = await response.json();
+
+            if (order) {
+                // Populate form fields with the order details
+                document.getElementById('order_id').value = order.order_id;
+                document.getElementById('customer_id').value = order.customer_id;
+                document.getElementById('cust_name').value = order.cust_name;
+                document.getElementById('cust_num').value = order.cust_num;
+                document.getElementById('cust_email').value = order.cust_email;
+                document.getElementById('address').value = order.address;
+                document.getElementById('productName').value = order.productName;
+                document.getElementById('productQuantity').value = order.productQuantity;
+                document.getElementById('order_date').value = order.order_date;
+                document.getElementById('payment_method').value = order.payment_method;
+                document.getElementById('delivery_opt').value = order.delivery_opt;
+                document.getElementById('total_amount').value = order.total_amount;
+
+                // Change form title to "Edit Order"
+                document.getElementById('formTitle').innerText = 'Edit Order';
+                document.getElementById('addForm').style.display = 'block'; // Show the form
+            } else {
+                alert('Order not found!');
+            }
+        } catch (error) {
+            console.error('Error editing order:', error);
+        }
+    }
+
+    // Save order (Add or Edit)
+    async function saveOrder() {
+        const order = {
+            order_id: document.getElementById('order_id').value, // If editing, the order ID is set
+            customer_id: document.getElementById('customer_id').value,
+            cust_name: document.getElementById('cust_name').value,
+            cust_num: document.getElementById('cust_num').value,
+            cust_email: document.getElementById('cust_email').value,
+            address: document.getElementById('address').value,
+            productName: document.getElementById('productName').value,
+            productQuantity: document.getElementById('productQuantity').value,
+            order_date: document.getElementById('order_date').value,
+            payment_method: document.getElementById('payment_method').value,
+            delivery_opt: document.getElementById('delivery_opt').value,
+            total_amount: document.getElementById('total_amount').value
+        };
+
+        try {
+            const response = await fetch('manageOrderAdmin.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(order)
+            });
+            const result = await response.json();
+            if (result.success) {
+                alert('Order saved successfully!');
+                hideAddForm();
+                fetchOrders(); // Reload orders table
+            } else {
+                alert('Error saving order');
+            }
+        } catch (error) {
+            console.error('Error saving order:', error);
+        }
+    }
+
+    // Delete order
+    async function deleteOrder(order_id) {
+        if (confirm('Are you sure you want to delete this order?')) {
             try {
-                const response = await fetch(API_URL, { 
-                    credentials: 'include',
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                });
-                const orders = await handleResponse(response);
-                
-                const orderTableBody = document.getElementById('orderTableBody');
-                orderTableBody.innerHTML = '';
-
-                orders.forEach(order => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${order.order_id}</td>
-                        <td>${order.user_id}</td>
-                        <td>${order.productName}</td>
-                        <td>${order.productQuantity}</td>
-                        <td>${order.order_date}</td>
-                        <td>${order.total_amount}</td>
-                        <td>
-                            <button class="action-btn" onclick="editOrder(${order.order_id})">Edit</button>
-                            <button class="action-btn delete-btn" onclick="deleteOrder(${order.order_id})">Delete</button>
-                        </td>
-                    `;
-                    orderTableBody.appendChild(row);
-                });
-            } catch (error) {
-                console.error('Error fetching orders:', error);
-                alert('Error fetching orders: ' + error.message);
-            }
-        }
-
-        function showAddForm() {
-            document.getElementById('formTitle').textContent = 'Add New Order';
-            document.getElementById('orderForm').reset();
-            document.getElementById('order_id').value = '';
-            document.getElementById('editForm').style.display = 'block';
-            document.getElementById('order_date').value = new Date().toISOString().split('T')[0];
-        }
-
-        function showEditForm(order = {}) {
-            document.getElementById('formTitle').textContent = 'Edit Order';
-            document.getElementById('editForm').style.display = 'block';
-            document.getElementById('order_id').value = order.order_id || '';
-            document.getElementById('user_id').value = order.user_id || '';
-            document.getElementById('productName').value = order.productName || '';
-            document.getElementById('productQuantity').value = order.productQuantity || '';
-            document.getElementById('order_date').value = order.order_date ? order.order_date.split('T')[0] : '';
-            document.getElementById('total_amount').value = order.total_amount || '';   
-        }
-
-        function hideEditForm() {
-            document.getElementById('editForm').style.display = 'none';
-            document.getElementById('orderForm').reset();
-        }
-
-        async function saveOrder() {
-            try {
-                const order = {
-                    order_id: document.getElementById('order_id').value,
-                    customer_id: document.getElementById('user_id').value,
-                    productName: document.getElementById('productName').value,
-                    productQuantity: document.getElementById('productQuantity').value,
-                    order_date: document.getElementById('order_date').value,
-                    total_amount: document.getElementById('total_amount').value
-                };
-
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    credentials: 'include',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify(order)
-                });
-
-                const result = await handleResponse(response);
-                if (result.success) {
-                    await fetchOrders();
-                    hideEditForm();
-                    alert('Order saved successfully!');
-                }
-            } catch (error) {
-                console.error('Error saving order:', error);
-                alert('Error saving order: ' + error.message);
-            }
-        }
-
-        async function deleteOrder(orderId) {
-            if (!confirm('Are you sure you want to delete this order?')) {
-                return;
-            }
-            
-            try {
-                const response = await fetch(API_URL, {
+                const response = await fetch('manageOrderAdmin.php', {
                     method: 'DELETE',
-                    credentials: 'include',
                     headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
+                        'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ order_id: orderId })
+                    body: JSON.stringify({ order_id })
                 });
-
-                const result = await handleResponse(response);
+                const result = await response.json();
                 if (result.success) {
-                    await fetchOrders();
                     alert('Order deleted successfully!');
+                    fetchOrders(); // Reload orders table
+                } else {
+                    alert('Error deleting order');
                 }
             } catch (error) {
                 console.error('Error deleting order:', error);
-                alert('Error deleting order: ' + error.message);
             }
         }
+    }
 
-        async function editOrder(orderId) {
-            try {
-                const response = await fetch(API_URL, { 
-                    credentials: 'include',
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                });
-                const orders = await handleResponse(response);
-                const order = orders.find(o => o.order_id == orderId);
-                if (order) {
-                    showEditForm(order);
-                } else {
-                    throw new Error('Order not found');
-                }
-            } catch (error) {
-                console.error('Error editing order:', error);
-                alert('Error editing order: ' + error.message);
-            }
-        }
+    // Function to navigate to the Dashboard
+    function exitToDashboard() {
+        window.location.href = 'dashboardAdmin.html'; // Redirect to the dashboard page
+    }
 
-        function exitToAdmin() {
-            window.location.href = 'dashboardAdmin.html';
-        }
-
-        // Initial load
-        fetchOrders();
-    </script>
-
-    <!-- Footer -->
-    <footer>
-    <div class="footer-content">
-        <div class="footer-section">
-            <img src="logo.png" alt="Company Logo" class="footer-logo">
-        </div>
-        
-        <div class="footer-section">
-            <h3>Information</h3>
-            <ul>
-                <li><a href="dashboardAdmin.html">Main</a></li>
-                <li><a href="manageOrderAdmin.html">Order</a></li>
-                <li><a href="#">Review</a></li>
-                <li><a href="catalog.html">Products</a></li>                 
-            </ul>
-        </div>
-        
-        <div class="footer-section">
-            <h3>Contacts</h3>
-            <ul>
-                <li>Kuching, Sarawak, Malaysia</li>
-                <li>+60 18-980 3060</li>
-                <li><a href="irasyahirah0104@gmail.com">irasyahirah0104@gmail.com</a></li>
-            </ul>
-        </div>
-        
-        <div class="footer-section">
-            <h3>Social Media</h3>
-            <div class="social-links">
-                <a href="https://wa.link/x49y2f"><img src="ws.png" alt="Whatsapp"></a>
-                <a href="https://www.instagram.com/iam.bakersbakes/"><img src="ig.png" alt="Instagram"></a>
-            </div>
-        </div>
-    </div>
-    
-    <div class="copyright">
-        © 2023 All Rights Reserved
-    </div>
-</footer>
-
+    // Initialize the page by fetching orders
+    fetchOrders();
+</script>
 
 </body>
 </html>
